@@ -11,8 +11,8 @@ class Dbconfig {
 
     function __construct() {
         $this->serverName = 'localhost';
-        $this->userName = '';
+        $this->userName = 'root';
         $this->passCode = '';
-        $this->dbName = '';
+        $this->dbName = 'people';
     }
 }
