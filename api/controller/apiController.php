@@ -9,17 +9,39 @@ $app = new Slim(array('debug' => true));
 
 $app->post('/addPeople', function() use($app){
 	$input = $app->request()->post();
+	$strFields = ['email','f_name','l_name','gender','occupation'];
+	foreach ($input as $key => $value) {
+		if(in_array($key, $strFields)) $value = "'".$value."'";
+		if (!empty($value) && $key!='email') {
+			if(isset($fields)) $fields = $fields.', '.$key;
+			else $fields = $key;
+
+			if(isset($values)) $values = $values.', '.$value;
+			else $values = $value;
+		}
+	}
+
     $DbConn = new DbConn();
     try {
-    	$sql1 = "INSERT INTO users (email, reg_date) VALUES ('amit5@people.com', ".time().")";
-    	$DbConn->conn->beginTransaction();
-    	$DbConn->conn->query($sql);
-    	$sql2 = "INSERT INTO profile (user_id, f_name, l_name, gender, status, dob, mobile, occupation, last_modified) VALUES ('amit5@people.com', ".time().")";
-    	mysqli_insert_id($DbConn->conn);
+    	$DbConn->conn->autocommit(FALSE);
+    	
+    	$sql1 = "INSERT INTO users (email, reg_date) VALUES ('".$input['email']."', ".time().")";
+    	$result1 = $DbConn->conn->query($sql1);
+    	$sql2 = "INSERT INTO profile (user_id, ".$fields.", last_modified) VALUES (".mysqli_insert_id($DbConn->conn).", ".$values.", ".time().")";
+    	$result2 = $DbConn->conn->query($sql2);
+    	
+    	if($result1 && $result2) {
+    		echo mysqli_insert_id($DbConn->conn);
+    		$DbConn->conn->commit();
+    	} else {
+    		echo "Error occured";
+    		$DbConn->conn->rollback();
+    	}
     } catch (Exception $e) {
 	    $DbConn->conn->rollback();
+	    echo $e->getMessage();
 	}
-	var_dump($a);
+	$DbConn->close();
 });
 
 $app->post('/addAdmin', function() use($app){

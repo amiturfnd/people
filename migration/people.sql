@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `type` varchar(15) NOT NULL DEFAULT 'People',
   `reg_date` int(11) DEFAULT NULL,
   `token` varchar(31) DEFAULT NULL,
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

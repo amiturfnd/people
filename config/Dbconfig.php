@@ -4,10 +4,10 @@
 * -------- This file Contains MySQL server details ---------
 */
 class Dbconfig {
-    public $serverName;
-    public $userName;
-    public $passCode;
-    public $dbName;
+    protected $serverName;
+    protected $userName;
+    protected $passCode;
+    protected $dbName;
 
     function __construct() {
         $this->serverName = 'localhost';
