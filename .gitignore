@@ -5,4 +5,4 @@
 # composer itself is not needed
 composer.phar
 
-/config/Dbconfig.php
+/config/Dbconfig

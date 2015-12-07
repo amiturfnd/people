@@ -13,6 +13,6 @@ class Dbconfig {
         $this->serverName = 'localhost';
         $this->userName = 'root';
         $this->passCode = '';
-        $this->dbName = 'people';
+        $this->dbName = '';
     }
 }
